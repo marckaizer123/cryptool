@@ -5,6 +5,7 @@ import 'package:cryptool/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/decrypt/decrypt.dart';
+import 'style.dart';
 
 const HomeRoute = '/';
 const EncryptRoute = '/encrypt';
@@ -15,6 +16,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: _routes(),
+      theme: _theme(),
+      debugShowCheckedModeBanner: false,
     );
   }
 
@@ -39,13 +42,13 @@ class App extends StatelessWidget {
     };
   }
 
-  // ThemeData _theme() {
-  //   return ThemeData(
-  //       appBarTheme:
-  //           AppBarTheme(textTheme: TextTheme(headline1: AppBarTextStyle)),
-  //       textTheme: TextTheme(
-  //         headline1: TitleTextStyle,
-  //         bodyText1: BodyTextStyle,
-  //       ));
-  // }
+  ThemeData _theme() {
+    return ThemeData(
+        appBarTheme:
+            AppBarTheme(textTheme: TextTheme(headline1: AppBarTextStyle)),
+        textTheme: TextTheme(
+          headline1: TitleTextStyle,
+          bodyText1: BodyTextStyle,
+        ));
+  }
 }

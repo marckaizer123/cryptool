@@ -1,3 +1,4 @@
+import 'package:cryptool/screens/home/menu_card.dart';
 import 'package:flutter/material.dart';
 import '../../app.dart';
 
@@ -6,35 +7,29 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        leading: IconButton(
+          color: Colors.black,
+          onPressed: () {},
+          icon: Icon(Icons.menu),
+        ),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Home',
+          style: Theme.of(context).appBarTheme.textTheme.headline1,
+        ),
       ),
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(color: Colors.black12),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(children: [
-              const Divider(),
-              //Encrypt
-              ElevatedButton(
-                onPressed: () => _onEncryptTap(context),
-                child: Text('Encrypt'),
-              ),
-              //Decrypt
-              ElevatedButton(
-                  onPressed: () => _onDecryptTap(context),
-                  child: Text('Decrypt'))
-            ]),
+          children: <Widget>[
+            MenuCard('assets/icons/data-encryption.png', 'Encrypt',
+                Icons.enhanced_encryption_rounded),
+            MenuCard('assets/icons/data-decryption.png', 'Decrypt',
+                Icons.no_encryption_rounded),
           ],
         ),
       ),
     );
-  }
-
-  _onEncryptTap(BuildContext context) {
-    Navigator.pushNamed(context, EncryptRoute);
-  }
-
-  _onDecryptTap(BuildContext context) {
-    Navigator.pushNamed(context, DecryptRoute);
   }
 }

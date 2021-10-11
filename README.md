@@ -3,9 +3,13 @@
 Cyptography tool
 
 
-Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUSneaUbfR?usp=sharing)\
+UI Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUSneaUbfR?usp=sharing)\
 ![Screenshots](resources/update1/scr1.PNG)
 ![Screenshots](resources/update1/scr2.PNG)
+\
+\
+UI Update 2 :\
+![Screenshots](resources/update2/scr1.PNG)
 
 ## Getting Started
 

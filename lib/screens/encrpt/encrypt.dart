@@ -5,15 +5,16 @@ class EncryptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Encrypt'),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Encrypt',
+          style: Theme.of(context).appBarTheme.textTheme.headline1,
+        ),
       ),
-      body: Center(
+      body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(),
-            ElevatedButton(onPressed: null, child: Text('Encrypt'))
-          ],
+          children: <Widget>[],
         ),
       ),
     );
