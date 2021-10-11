@@ -3,7 +3,7 @@
 Cyptography tool
 
 
-Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUSneaUbfR?usp=sharing)\
+Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUSneaUbfR?usp=sharing){:target="_blank"}\
 ![Screenshots](resources/update1/scr1.PNG)
 ![Screenshots](resources/update1/scr2.PNG)
 
