@@ -9,7 +9,7 @@ UI Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomR
 \
 \
 UI Update 2 :\
-![Screenshots](resources/update2/scr1.PNG)
+![Screenshots](resources\update2\scr1.png)
 
 ## Getting Started
 
