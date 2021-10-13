@@ -10,6 +10,11 @@ UI Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomR
 \
 UI Update 2 :\
 ![Screenshots](resources/update2/scr1.png)
+\
+\
+UI Update 3 :\
+![Screenshots](resources/update3/scr1.png)
+![Screenshots](resources/update3/scr2.png)
 
 ## Getting Started
 
