@@ -1,20 +1,29 @@
-# cryptool
+# Cryptool
 
-Cyptography tool
+## Cyptography tool
+
+Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUSneaUbfR?usp=sharing)
 
 
-UI Update 1: Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUSneaUbfR?usp=sharing)\
-![Screenshots](resources/update1/scr1.PNG)
-![Screenshots](resources/update1/scr2.PNG)
-\
-\
-UI Update 2 :\
-![Screenshots](resources/update2/scr1.png)
-\
-\
-UI Update 3 :\
+UI Update :\
 ![Screenshots](resources/update3/scr1.png)
 ![Screenshots](resources/update3/scr2.png)
+
+Para sa gustong mag develop : 
+
+ [use 1.22.2 stable flutter version](https://flutter.dev/docs/development/tools/sdk/releases)
+
+- [Installing Flutter](https://flutter.dev/docs/get-started/install)
+- [Setting up IDE](https://flutter.dev/docs/get-started/editor?tab=androidstudio)
+
+
+
+
+
+
+
+
+
 
 ## Getting Started
 
