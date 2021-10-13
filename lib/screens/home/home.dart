@@ -1,6 +1,7 @@
 import 'package:cryptool/screens/home/menu_card.dart';
 import 'package:cryptool/screens/home/navbar.dart';
 import 'package:flutter/material.dart';
+import '../../app.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -20,10 +21,28 @@ class Home extends StatelessWidget {
         decoration: BoxDecoration(color: Colors.black12),
         child: Column(
           children: <Widget>[
-            MenuCard('assets/icons/data-encryption.png', 'Encrypt',
-                Icons.enhanced_encryption_rounded),
-            MenuCard('assets/icons/data-decryption.png', 'Decrypt',
-                Icons.no_encryption_rounded),
+            SizedBox(
+              height: 50.0,
+            ),
+            MenuCard(
+              label: 'Encrypt',
+              imagePath: 'assets/images/data-encryption.png',
+              route: EncryptRoute,
+              // onTap: () {
+              //   Navigator.pushNamed(context, EncryptRoute);
+              // }
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
+            MenuCard(
+              label: 'Decrypt',
+              imagePath: 'assets/images/data-decryption.png',
+              route: DecryptRoute,
+              // onTap: () {
+              //   Navigator.pushNamed(context, EncryptRoute);
+              // }
+            ),
           ],
         ),
       ),
