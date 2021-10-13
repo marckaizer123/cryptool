@@ -9,12 +9,16 @@ UI Update :\
 ![Screenshots](resources/update3/scr1.png)
 ![Screenshots](resources/update3/scr2.png)
 
-Para sa gustong mag develop : 
+## Para sa gustong mag develop : 
 
  [use 1.22.2 stable flutter version](https://flutter.dev/docs/development/tools/sdk/releases)
 
 - [Installing Flutter](https://flutter.dev/docs/get-started/install)
 - [Setting up IDE](https://flutter.dev/docs/get-started/editor?tab=androidstudio)
+
+## Setting up the project
+- Git [Download](https://git-scm.com/downloads).
+
 
 
 
