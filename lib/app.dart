@@ -49,6 +49,7 @@ class App extends StatelessWidget {
         textTheme: TextTheme(
           headline1: TitleTextStyle,
           bodyText1: BodyTextStyle,
+          headline2: TitleTextStyle2,
         ));
   }
 }

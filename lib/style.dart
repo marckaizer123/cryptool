@@ -18,9 +18,39 @@ const TitleTextStyle = TextStyle(
     fontSize: LargeTextSize,
     color: Colors.black);
 
+const TitleTextStyle2 = TextStyle(
+    fontFamily: FontNameDefault,
+    fontWeight: FontWeight.w300,
+    fontSize: LargeTextSize,
+    color: Colors.white);
+
 const BodyTextStyle = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.w300,
   fontSize: BodyTextSize,
   color: Colors.black,
 );
+
+class StyleMaker {
+  static TextStyle bodyTextStyle([Color color, FontWeight fontWeight]) {
+    return TextStyle(
+      fontFamily: FontNameDefault,
+      fontWeight: fontWeight ?? FontWeight.w300,
+      fontSize: BodyTextSize,
+      color: color ?? Colors.black,
+    );
+  }
+
+  static TextStyle buttonTextStyle({
+    Color fontColor,
+    FontWeight fontWeight,
+    double fontSize,
+  }) {
+    return TextStyle(
+      fontFamily: FontNameDefault,
+      fontWeight: fontWeight ?? FontWeight.w300,
+      fontSize: fontSize ?? MediumTextSize,
+      color: fontColor ?? Colors.black,
+    );
+  }
+}

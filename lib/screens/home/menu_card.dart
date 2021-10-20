@@ -13,7 +13,7 @@ class MenuCard extends StatelessWidget {
       onTap: () => Navigator.pushNamed(context, route),
       child: Center(
         child: Container(
-          constraints: BoxConstraints.expand(width: 200.0, height: 200.0),
+          constraints: BoxConstraints.expand(width: 150.0, height: 150.0),
           decoration: BoxDecoration(
             color: Colors.grey,
           ),

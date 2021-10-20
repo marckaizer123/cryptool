@@ -16,12 +16,8 @@ UI Update :\
 - [Installing Flutter](https://flutter.dev/docs/get-started/install)
 - [Setting up IDE](https://flutter.dev/docs/get-started/editor?tab=androidstudio)
 
-## Setting up the project
+### Setting up the project
 - Git [Download](https://git-scm.com/downloads).
-
-
-
-
 
 
 
