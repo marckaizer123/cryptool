@@ -6,8 +6,11 @@ Download [APK](https://drive.google.com/drive/folders/13rlbKG_juomRCbjuo-K3mMSUS
 
 
 UI Update :\
-![Screenshots](resources/update3/scr1.png)
-![Screenshots](resources/update3/scr2.png)
+![Screenshots](../assets/resources/update3/scr1.png)
+![Screenshots](../assets/resources/update3/scr2.png)
+
+App Map :\
+![AppMap](../assets/uiUpdate.png)
 
 ## Para sa gustong mag develop : 
 
