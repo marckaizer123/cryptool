@@ -32,11 +32,12 @@ const BodyTextStyle = TextStyle(
 );
 
 class StyleMaker {
-  static TextStyle bodyTextStyle([Color color, FontWeight fontWeight]) {
+  static TextStyle bodyTextStyle(
+      {Color color, FontWeight fontWeight, double fontSize}) {
     return TextStyle(
       fontFamily: FontNameDefault,
       fontWeight: fontWeight ?? FontWeight.w300,
-      fontSize: BodyTextSize,
+      fontSize: fontSize ?? BodyTextSize,
       color: color ?? Colors.black,
     );
   }

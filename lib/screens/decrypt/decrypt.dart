@@ -1,8 +1,12 @@
+import 'package:cryptool/app.dart';
 import 'package:flutter/material.dart';
 
 import '../../style.dart';
 
 class DecryptionScreen extends StatelessWidget {
+  final _keyController = TextEditingController();
+  final _cipherTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +37,7 @@ class DecryptionScreen extends StatelessWidget {
                   color: Colors.black12,
                 ),
                 child: TextField(
+                  controller: _keyController,
                   decoration: InputDecoration(
                     hintText: 'Key ....',
                     border: InputBorder.none,
@@ -52,6 +57,7 @@ class DecryptionScreen extends StatelessWidget {
                   color: Colors.black12,
                 ),
                 child: TextField(
+                  controller: _cipherTextController,
                   minLines: 5,
                   maxLines: 5,
                   decoration: InputDecoration(
@@ -66,7 +72,11 @@ class DecryptionScreen extends StatelessWidget {
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
                 child: FlatButton(
-                  onPressed: () => print('Here'),
+                  onPressed: () => _onDecrypTap(
+                    context,
+                    _keyController.text,
+                    _cipherTextController.text,
+                  ),
                   child: Text(
                     'Decrypt',
                     style: StyleMaker.buttonTextStyle(
@@ -81,5 +91,10 @@ class DecryptionScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onDecrypTap(BuildContext context, String key, String text) {
+    Navigator.pushNamed(context, ResultRoute,
+        arguments: {"key": key, "resultingText": text, "isCipher": true});
   }
 }

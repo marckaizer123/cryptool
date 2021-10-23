@@ -2,6 +2,7 @@
 
 import 'package:cryptool/screens/encrpt/encrypt.dart';
 import 'package:cryptool/screens/home/home.dart';
+import 'package:cryptool/screens/result/result.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/decrypt/decrypt.dart';
@@ -10,6 +11,7 @@ import 'style.dart';
 const HomeRoute = '/';
 const EncryptRoute = '/encrypt';
 const DecryptRoute = '/decrypt';
+const ResultRoute = '/result';
 
 class App extends StatelessWidget {
   @override
@@ -34,6 +36,10 @@ class App extends StatelessWidget {
           break;
         case DecryptRoute:
           screen = DecryptionScreen();
+          break;
+        case ResultRoute:
+          screen = Result(arguments['key'], arguments['resultingText'],
+              arguments['isCipher']);
           break;
         default:
           return null;
