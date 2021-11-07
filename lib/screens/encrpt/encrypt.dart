@@ -83,7 +83,10 @@ class EncryptionScreen extends StatelessWidget {
       }
     }
 
-    text = keyProcess(text, key);
+    for(int i = 0; i<4; i++){
+      text = keyProcess(text, key);
+    }
+
     //loop 16x
 
 
@@ -114,6 +117,14 @@ String keyProcess(String text, String key)
       index = index - _chars.length;
     text = replaceCharAt(text, i, _chars[index]);
   }
+  return text;
+}
+
+String transposeCharacters(String text){
+  return text;
+}
+
+String substituteCharacters(String text){
   return text;
 }
 
