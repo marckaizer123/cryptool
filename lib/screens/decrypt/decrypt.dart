@@ -72,7 +72,7 @@ class DecryptionScreen extends StatelessWidget {
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
                 child: FlatButton(
-                  onPressed: () => _onDecrypTap(
+                  onPressed: () => _onDecryptTap(
                     context,
                     _keyController.text,
                     _cipherTextController.text,
@@ -93,7 +93,7 @@ class DecryptionScreen extends StatelessWidget {
     );
   }
 
-  _onDecrypTap(BuildContext context, String key, String text) {
+  _onDecryptTap(BuildContext context, String key, String text) {
     Navigator.pushNamed(context, ResultRoute,
         arguments: {"key": key, "resultingText": text, "isCipher": true});
   }

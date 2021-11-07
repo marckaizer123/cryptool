@@ -1,9 +1,10 @@
 import 'package:cryptool/app.dart';
 import 'package:cryptool/style.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'dart:convert';
 
 class EncryptionScreen extends StatelessWidget {
-  final _keyController = TextEditingController();
   final _plainTextController = TextEditingController();
 
   @override
@@ -27,27 +28,6 @@ class EncryptionScreen extends StatelessWidget {
               SizedBox(
                 height: 50.0,
               ),
-
-              //Key input
-              Container(
-                margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
-                padding: EdgeInsets.only(left: 5.0),
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                ),
-                child: TextField(
-                  controller: _keyController,
-                  decoration: InputDecoration(
-                    hintText: 'Key ....',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-
-              SizedBox(
-                height: 20.0,
-              ),
-
               //Plain Text box
               Container(
                 margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
@@ -71,9 +51,8 @@ class EncryptionScreen extends StatelessWidget {
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
                 child: FlatButton(
-                  onPressed: () => _onEncrypTap(
+                  onPressed: () => _onEncryptTap(
                     context,
-                    _keyController.text,
                     _plainTextController.text,
                   ),
                   child: Text(
@@ -92,8 +71,50 @@ class EncryptionScreen extends StatelessWidget {
     );
   }
 
-  _onEncrypTap(BuildContext context, String key, String text) {
+  _onEncryptTap(BuildContext context, String text) {
+    text = text.replaceAll(new RegExp(r'[^\w\s]+'),''); //remove special symbols
+    text = text.replaceAll(" ", ""); //remove spaces
+
+    String key = getRandomString(16);
+
+    if (text.length<16){
+      for(int i = text.length; i<16; i++){
+        text = text + "z";
+      }
+    }
+
+    text = keyProcess(text, key);
+    //loop 16x
+
+
+
+
     Navigator.pushNamed(context, ResultRoute,
         arguments: {"key": key, "resultingText": text, "isCipher": false});
   }
 }
+
+const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+Random _rnd = Random.secure();
+String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+
+String replaceCharAt(String oldString, int index, String newChar) {
+  return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
+}
+
+String keyProcess(String text, String key)
+{
+  int index = 0;
+  for(int i = 0; i<16; i++){
+    index = _chars.indexOf(text[i]) + _chars.indexOf(key[i]);
+
+    if(index>_chars.length)
+      index = index - _chars.length;
+    text = replaceCharAt(text, i, _chars[index]);
+  }
+  return text;
+}
+
+
