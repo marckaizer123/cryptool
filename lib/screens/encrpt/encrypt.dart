@@ -76,7 +76,6 @@ class EncryptionScreen extends StatelessWidget {
     text = text.replaceAll(" ", ""); //remove spaces
 
     String key = getRandomString(16);
-
     if (text.length<16){
       for(int i = text.length; i<16; i++){
         text = text + "z";
@@ -85,6 +84,7 @@ class EncryptionScreen extends StatelessWidget {
 
     for(int i = 0; i<4; i++){
       text = keyProcess(text, key);
+      text = transposeCharacters(text);
     }
 
     //loop 16x
@@ -102,9 +102,14 @@ Random _rnd = Random.secure();
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
-
 String replaceCharAt(String oldString, int index, String newChar) {
   return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
+}
+
+Iterable<String> splitStringByFour(String text){
+  RegExp rx = new RegExp(r".{1,4}(?=(.{4})+(?!.))|.{1,4}$");
+  return rx.allMatches(text).map((m) => m.group(0));
+
 }
 
 String keyProcess(String text, String key)
@@ -112,15 +117,36 @@ String keyProcess(String text, String key)
   int index = 0;
   for(int i = 0; i<16; i++){
     index = _chars.indexOf(text[i]) + _chars.indexOf(key[i]);
-
-    if(index>_chars.length)
+    if(index>_chars.length-1){
       index = index - _chars.length;
+    }
     text = replaceCharAt(text, i, _chars[index]);
   }
   return text;
 }
 
 String transposeCharacters(String text){
+  List textArray = splitStringByFour(text).toList();
+  print(textArray);
+
+  for (int i = 0; i < 1; i++) //Repeats the procedure until the shift value is reached.
+        {
+      textArray[1] = textArray[1].substring(3) + textArray[1].substring(0, 3); //places the last character at the first position and shifts everything to the right by 1 place.
+    }
+
+  for (int i = 0; i < 2; i++) //Repeats the procedure until the shift value is reached.
+      {
+    textArray[2] = textArray[2].substring(3) + textArray[2].substring(0, 3); //places the last character at the first position and shifts everything to the right by 1 place.
+  }
+
+  for (int i = 0; i < 3; i++) //Repeats the procedure until the shift value is reached.
+      {
+    textArray[3] = textArray[3].substring(3) + textArray[3].substring(0, 3); //places the last character at the first position and shifts everything to the right by 1 place.
+  }
+
+  print(textArray);
+  text = textArray.join();
+  print(text);
   return text;
 }
 
