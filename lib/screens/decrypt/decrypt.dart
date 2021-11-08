@@ -1,4 +1,5 @@
 import 'package:cryptool/app.dart';
+import 'package:cryptool/crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
 import '../../style.dart';
@@ -16,7 +17,7 @@ class DecryptionScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           'Decrypt',
-          style: Theme.of(context).appBarTheme.textTheme.headline1,
+          style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
       ),
       body: SingleChildScrollView(
@@ -71,7 +72,7 @@ class DecryptionScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () => _onDecryptTap(
                     context,
                     _keyController.text,
@@ -94,73 +95,28 @@ class DecryptionScreen extends StatelessWidget {
   }
 
   _onDecryptTap(BuildContext context, String key, String text) {
-
-    for(int i = 0; i<4; i++){
-      print("Before reverse transpose:  $text");
-      text = reverseTransposeCharacters(text);
-      print("After reverse transpose  $text");
-      text = reverseKeyProcess(text, key);
-      print("After reverse key process $text");
+    try {
+      Map plainKey = Crypto.decrypt(text, key);
+      Navigator.pushNamed(
+        context,
+        ResultRoute,
+        arguments: {
+          "key": plainKey['key'],
+          "resultingText": plainKey['text'],
+          "isCipher": true,
+        },
+      );
+    } catch (e) {
+      print(e);
+      Navigator.pushNamed(
+        context,
+        ResultRoute,
+        arguments: {
+          "key": key,
+          "resultingText": text,
+          "isCipher": true,
+        },
+      );
     }
-
-
-    Navigator.pushNamed(context, ResultRoute,
-        arguments: {"key": key, "resultingText": text, "isCipher": true});
   }
-}
-const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-
-String replaceCharAt(String oldString, int index, String newChar) {
-  return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
-}
-
-Iterable<String> splitStringByFour(String text){
-  RegExp rx = new RegExp(r".{1,4}(?=(.{4})+(?!.))|.{1,4}$");
-  return rx.allMatches(text).map((m) => m.group(0));
-}
-
-
-String shiftCharToLeft(String textArray, int shiftBy){
-  for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
-      {
-    textArray = textArray.substring(1) + textArray.substring(0,1); //places the first character at the last position and shifts everything to the left by 1 place.
-  }
-
-  return textArray;
-}
-
-String keyProcess(String text, String key)
-{
-  int index = 0;
-  for(int i = 0; i<16; i++){
-    index = _chars.indexOf(text[i]) + _chars.indexOf(key[i]);
-    if(index>_chars.length-1){
-      index = index - _chars.length;
-    }
-    text = replaceCharAt(text, i, _chars[index]);
-  }
-  return text;
-}
-
-String reverseKeyProcess(String text, String key){
-  int index = 0;
-  for(int i = 0; i<16; i++){
-    index = _chars.indexOf(text[i]) - _chars.indexOf(key[i]);
-    if(index<0){
-      index = index + _chars.length;
-    }
-    text = replaceCharAt(text, i, _chars[index]);
-  }
-  return text;
-}
-
-String reverseTransposeCharacters(String text){
-  List textArray = splitStringByFour(text).toList();
-
-  textArray[1] = shiftCharToLeft(textArray[1], 3);
-  textArray[2] = shiftCharToLeft(textArray[2], 2);
-  textArray[3] = shiftCharToLeft(textArray[3], 1);
-
-  text = textArray.join();
-  return text;
 }

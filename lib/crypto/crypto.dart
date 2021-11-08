@@ -1,11 +1,12 @@
+import 'encrypt_.dart';
+import 'decrypt_.dart';
+
 class Crypto {
-  static String encrypt(String plaiTtext, String key) {
-    final String cypherText = '';
-    return cypherText;
+  static Map<String, String> encrypt(String plainText) {
+    return encrypt_(plainText);
   }
 
-  static String decrypt(String cipherText, String key) {
-    final String plainText = '';
-    return plainText;
+  static Map<String, String> decrypt(String cipherText, String key) {
+    return decrypt_(cipherText, key);
   }
 }

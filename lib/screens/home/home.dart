@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Home',
-          style: Theme.of(context).appBarTheme.textTheme.headline1,
+          style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
       ),
       drawer: NavBar(),
