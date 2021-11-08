@@ -71,6 +71,7 @@ class EncryptionScreen extends StatelessWidget {
   }
 
   _onEncryptTap(BuildContext context, String text) {
+    //nasa crypto/encrypt_.dart yung codes
     Map cipherKey = Crypto.encrypt(text);
 
     Navigator.pushNamed(
