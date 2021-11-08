@@ -95,15 +95,21 @@ class DecryptionScreen extends StatelessWidget {
 
   _onDecryptTap(BuildContext context, String key, String text) {
 
-    for(int i = 0; i<4; i++){
-      print("Before reverse transpose:  $text");
-      text = reverseTransposeCharacters(text);
-      print("After reverse transpose  $text");
-      text = reverseKeyProcess(text, key);
-      print("After reverse key process $text");
+    List<String> textArray = splitStringBySixteen(text).toList();
+    print(textArray);
+
+    for(int i = 0; i<textArray.length; i++){
+      text = textArray[i];
+      for(int j = 0; j<4; j++){
+        print("Before reverse transpose:  $text");
+        text = reverseTransposeCharacters(text);
+        print("After reverse transpose  $text");
+        text = reverseKeyProcess(text, key);
+        print("After reverse key process $text");
+      }
+      textArray[i]=text;
     }
-
-
+    text = textArray.join();
     Navigator.pushNamed(context, ResultRoute,
         arguments: {"key": key, "resultingText": text, "isCipher": true});
   }
@@ -115,7 +121,12 @@ String replaceCharAt(String oldString, int index, String newChar) {
 }
 
 Iterable<String> splitStringByFour(String text){
-  RegExp rx = new RegExp(r".{1,4}(?=(.{4})+(?!.))|.{1,4}$");
+  RegExp rx = new RegExp(r"\w{1,4}");
+  return rx.allMatches(text).map((m) => m.group(0));
+}
+
+Iterable<String> splitStringBySixteen(String text){
+  RegExp rx = new RegExp(r"\w{1,16}");
   return rx.allMatches(text).map((m) => m.group(0));
 }
 

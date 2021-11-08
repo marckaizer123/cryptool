@@ -72,29 +72,32 @@ class EncryptionScreen extends StatelessWidget {
   }
 
   _onEncryptTap(BuildContext context, String text) {
+    String key = getRandomString(16);
+
     text = text.replaceAll(new RegExp(r'[^\w\s]+'),''); //remove special symbols
     text = text.replaceAll(" ", ""); //remove spaces
+    List<String> textArray = splitStringBySixteen(text).toList();
+    print(textArray);
 
-    String key = getRandomString(16);
-    if (text.length<16){
-      for(int i = text.length; i<16; i++){
-        text = text + "z";
+    for(int i = 0; i<textArray.length; i++){
+      if (textArray[i].length<16) { // if string block has less than 16 characters, pad the string with 'z'.
+        for (int j = textArray[i].length; j < 16; j++) {
+          textArray[i] = textArray[i] + "z";
+        }
       }
-    }
 
-    for(int i = 0; i<4; i++){
-      print("Before keyProcess  $text");
-      text = keyProcess(text, key);
-      print("After keyProcess  $text");
-      text = transposeCharacters(text);
-      print("After transpose  $text");
-    }
+      text = textArray[i];
+      for(int k = 0; k<4; k++){
+        print("Before keyProcess  $text");
+        text = keyProcess(text, key);
+        print("After keyProcess  $text");
+        text = transposeCharacters(text);
+        print("After transpose  $text");
+        }
+      textArray[i] = text;
+      }
 
-    //loop 16x
-
-
-
-
+    text = textArray.join();
     Navigator.pushNamed(context, ResultRoute,
         arguments: {"key": key, "resultingText": text, "isCipher": false});
   }
@@ -102,6 +105,7 @@ class EncryptionScreen extends StatelessWidget {
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Random _rnd = Random.secure();
+
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
@@ -110,7 +114,12 @@ String replaceCharAt(String oldString, int index, String newChar) {
 }
 
 Iterable<String> splitStringByFour(String text){
-  RegExp rx = new RegExp(r".{1,4}(?=(.{4})+(?!.))|.{1,4}$");
+  RegExp rx = new RegExp(r"\w{1,4}");
+  return rx.allMatches(text).map((m) => m.group(0));
+}
+
+Iterable<String> splitStringBySixteen(String text){
+  RegExp rx = new RegExp(r"\w{1,16}");
   return rx.allMatches(text).map((m) => m.group(0));
 }
 
@@ -122,6 +131,8 @@ String shiftCharToRight(String textArray, int shiftBy){
 
   return textArray;
 }
+
+
 
 String keyProcess(String text, String key)
 {
@@ -137,13 +148,13 @@ String keyProcess(String text, String key)
 }
 
 String transposeCharacters(String text){
-  List textArray = splitStringByFour(text).toList();
+  List<String> stringArray = splitStringByFour(text).toList();
 
-  textArray[1] = shiftCharToRight(textArray[1], 3);
-  textArray[2] = shiftCharToRight(textArray[2], 2);
-  textArray[3] = shiftCharToRight(textArray[3], 1);
+  stringArray[1] = shiftCharToRight(stringArray[1], 3);
+  stringArray[2] = shiftCharToRight(stringArray[2], 2);
+  stringArray[3] = shiftCharToRight(stringArray[3], 1);
 
-  text = textArray.join();
+  text = stringArray.join();
   return text;
 }
 
