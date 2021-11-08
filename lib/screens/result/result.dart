@@ -29,7 +29,7 @@ class Result extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text.rich(
+              SelectableText.rich(
                 TextSpan(
                   text: 'Key : ',
                   style: StyleMaker.bodyTextStyle(
@@ -47,7 +47,7 @@ class Result extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              Text.rich(
+              SelectableText.rich(
                 TextSpan(
                   text: isCipher ? 'Cipher Text : ' : 'Plain Text : ',
                   style: StyleMaker.bodyTextStyle(
