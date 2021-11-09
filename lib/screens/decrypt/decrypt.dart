@@ -94,18 +94,20 @@ class DecryptionScreen extends StatelessWidget {
   }
 
   _onDecryptTap(BuildContext context, String key, String text) {
-
+    List<String> subTable = buildSubTable();
     List<String> textArray = splitStringBySixteen(text).toList();
     print(textArray);
 
     for(int i = 0; i<textArray.length; i++){
       text = textArray[i];
       for(int j = 0; j<4; j++){
-        print("Before reverse transpose:  $text");
+        print("Before reverse block transposition:  $text");
+        text = reverseTransposeBlocks(text);
+        print("After reverse block transposition:  $text");
         text = reverseTransposeCharacters(text);
-        print("After reverse transpose  $text");
-        text = reverseKeyProcess(text, key);
-        print("After reverse key process $text");
+        print("After reverse character transposition  $text");
+        text = reverseSubstituteCharacters(text, key);
+        print("After reverse substitution:  $text");
       }
       textArray[i]=text;
     }
@@ -131,29 +133,16 @@ Iterable<String> splitStringBySixteen(String text){
 }
 
 
-String shiftCharToLeft(String textArray, int shiftBy){
+String shiftCharToLeft(String text, int shiftBy){
   for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
       {
-    textArray = textArray.substring(1) + textArray.substring(0,1); //places the first character at the last position and shifts everything to the left by 1 place.
-  }
-
-  return textArray;
-}
-
-String keyProcess(String text, String key)
-{
-  int index = 0;
-  for(int i = 0; i<16; i++){
-    index = _chars.indexOf(text[i]) + _chars.indexOf(key[i]);
-    if(index>_chars.length-1){
-      index = index - _chars.length;
-    }
-    text = replaceCharAt(text, i, _chars[index]);
+    text = text.substring(1) + text.substring(0,1); //places the first character at the last position and shifts everything to the left by 1 place.
   }
   return text;
 }
 
-String reverseKeyProcess(String text, String key){
+
+String reverseSubstituteCharacters(String text, String key){
   int index = 0;
   for(int i = 0; i<16; i++){
     index = _chars.indexOf(text[i]) - _chars.indexOf(key[i]);
@@ -174,4 +163,27 @@ String reverseTransposeCharacters(String text){
 
   text = textArray.join();
   return text;
+}
+
+String reverseTransposeBlocks(String text){
+  List<String> stringArray = splitStringByFour(text).toList();
+  String temp = "";
+  temp = stringArray[3];
+  stringArray[3] = stringArray[2];
+  stringArray[2] = stringArray[1];
+  stringArray[1] = stringArray[0];
+  stringArray[0] = temp;
+  return stringArray.join();
+}
+
+List<String> buildSubTable(){
+  String subTableLine = _chars;
+  List<String> subTable = [];
+
+  for(int i = 0; i < subTableLine.length; i++){
+    subTable.add(subTableLine);
+    subTableLine = shiftCharToLeft(subTableLine, 1);
+  }
+  //subTable.forEach((string) { print(string);});
+  return subTable;
 }

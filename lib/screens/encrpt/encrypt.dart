@@ -73,11 +73,14 @@ class EncryptionScreen extends StatelessWidget {
 
   _onEncryptTap(BuildContext context, String text) {
     String key = getRandomString(16);
+    List<String> subTable = buildSubTable();
 
     text = text.replaceAll(new RegExp(r'[^\w\s]+'),''); //remove special symbols
     text = text.replaceAll(" ", ""); //remove spaces
     List<String> textArray = splitStringBySixteen(text).toList();
     print(textArray);
+
+
 
     for(int i = 0; i<textArray.length; i++){
       if (textArray[i].length<16) { // if string block has less than 16 characters, pad the string with 'z'.
@@ -88,11 +91,13 @@ class EncryptionScreen extends StatelessWidget {
 
       text = textArray[i];
       for(int k = 0; k<4; k++){
-        print("Before keyProcess  $text");
-        text = keyProcess(text, key);
-        print("After keyProcess  $text");
+        print("Before substitution: $text");
+        text = substituteCharacters(text, key);
+        print("After substitution: $text");
         text = transposeCharacters(text);
-        print("After transpose  $text");
+        print("After character transposition: $text");
+        text = transposeBlocks(text);
+        print("After block transposition: $text");
         }
       textArray[i] = text;
       }
@@ -123,18 +128,25 @@ Iterable<String> splitStringBySixteen(String text){
   return rx.allMatches(text).map((m) => m.group(0));
 }
 
-String shiftCharToRight(String textArray, int shiftBy){
+String shiftCharToRight(String text, int shiftBy){
   for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
       {
-    textArray = textArray.substring(3) + textArray.substring(0, 3); //places the last character at the first position and shifts everything to the right by 1 place.
+    text = text.substring(3) + text.substring(0, 3); //places the last character at the first position and shifts everything to the right by 1 place.
   }
+  return text;
+}
 
-  return textArray;
+String shiftCharToLeft(String text, int shiftBy){
+  for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
+      {
+    text = text.substring(1) + text.substring(0,1); //places the first character at the last position and shifts everything to the left by 1 place.
+  }
+  return text;
 }
 
 
 
-String keyProcess(String text, String key)
+String substituteCharacters(String text, String key)
 {
   int index = 0;
   for(int i = 0; i<16; i++){
@@ -154,11 +166,33 @@ String transposeCharacters(String text){
   stringArray[2] = shiftCharToRight(stringArray[2], 2);
   stringArray[3] = shiftCharToRight(stringArray[3], 1);
 
-  text = stringArray.join();
-  return text;
+  return stringArray.join();
 }
 
-String substituteCharacters(String text){
+String transposeBlocks(String text){
+  List<String> stringArray = splitStringByFour(text).toList();
+  String temp = "";
+  temp = stringArray[0];
+  stringArray[0] = stringArray[1];
+  stringArray[1] = stringArray[2];
+  stringArray[2] = stringArray[3];
+  stringArray[3] = temp;
+  return stringArray.join();
+}
+
+List<String> buildSubTable(){
+  String subTableLine = _chars;
+  List<String> subTable = [];
+
+  for(int i = 0; i < subTableLine.length; i++){
+    subTable.add(subTableLine);
+    subTableLine = shiftCharToLeft(subTableLine, 1);
+  }
+  //subTable.forEach((string) { print(string);});
+  return subTable;
+}
+
+String substituteCharacters2(String text){
   return text;
 }
 
