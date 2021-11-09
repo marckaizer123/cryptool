@@ -98,6 +98,8 @@ class EncryptionScreen extends StatelessWidget {
         print("After character transposition: $text");
         text = transposeBlocks(text);
         print("After block transposition: $text");
+        text = substituteCharacters2(text, key, subTable);
+        print("After second substitution: $text");
         }
       textArray[i] = text;
       }
@@ -192,7 +194,18 @@ List<String> buildSubTable(){
   return subTable;
 }
 
-String substituteCharacters2(String text){
+String substituteCharacters2(String text, String key, List<String> subTable){
+  int index1 = 0;
+  int index2 = 0;
+  String newChar = "";
+  for(int i = 0; i<16; i++){
+    index1 = _chars.indexOf(text[i]);
+    index2 = _chars.indexOf(key[i]);
+    newChar = subTable[index1][index2];
+
+    text = replaceCharAt(text, i, newChar);
+
+  }
   return text;
 }
 

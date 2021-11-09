@@ -101,7 +101,10 @@ class DecryptionScreen extends StatelessWidget {
     for(int i = 0; i<textArray.length; i++){
       text = textArray[i];
       for(int j = 0; j<4; j++){
-        print("Before reverse block transposition:  $text");
+
+        print("Before reverse second substitution:  $text");
+        text = reverseSubstituteCharacters2(text, key, subTable);
+        print("After reverse second substitution:  $text");
         text = reverseTransposeBlocks(text);
         print("After reverse block transposition:  $text");
         text = reverseTransposeCharacters(text);
@@ -187,3 +190,21 @@ List<String> buildSubTable(){
   //subTable.forEach((string) { print(string);});
   return subTable;
 }
+
+String reverseSubstituteCharacters2(String text, String key, List<String> subTable){
+  int index = 0;
+  int index2 = 0;
+  String newChar = "";
+  for(int i = 0; i<16; i++){
+
+    index = _chars.indexOf(key[i]); //search for index of key char
+
+    index2 = subTable[index].indexOf(text[i]);
+    newChar = _chars[index2];
+    text = replaceCharAt(text, i, newChar);
+
+  }
+  return text;
+}
+//OI4svAK0UpXncfGd
+//GUDHZUJWzrbu3rVy
