@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 import '../../style.dart';
 
 class DecryptionScreen extends StatelessWidget {
+  final String key_, cipherText;
   final _keyController = TextEditingController();
   final _cipherTextController = TextEditingController();
 
+  DecryptionScreen({this.key_, this.cipherText});
+
   @override
   Widget build(BuildContext context) {
+    _keyController.text = key_ ?? '';
+    _cipherTextController.text = cipherText ?? '';
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -98,10 +104,9 @@ class DecryptionScreen extends StatelessWidget {
     List<String> textArray = splitStringBySixteen(text).toList();
     print(textArray);
 
-    for(int i = 0; i<textArray.length; i++){
+    for (int i = 0; i < textArray.length; i++) {
       text = textArray[i];
-      for(int j = 0; j<4; j++){
-
+      for (int j = 0; j < 4; j++) {
         print("Before reverse second substitution:  $text");
         text = reverseSubstituteCharacters2(text, key, subTable);
         print("After reverse second substitution:  $text");
@@ -112,44 +117,49 @@ class DecryptionScreen extends StatelessWidget {
         text = reverseSubstituteCharacters(text, key);
         print("After reverse substitution:  $text");
       }
-      textArray[i]=text;
+      textArray[i] = text;
     }
     text = textArray.join();
     Navigator.pushNamed(context, ResultRoute,
-        arguments: {"key": key, "resultingText": text, "isCipher": true});
+        arguments: {"key": key, "resultingText": text, "crypted": false});
   }
 }
+
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 
 String replaceCharAt(String oldString, int index, String newChar) {
-  return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
+  return oldString.substring(0, index) +
+      newChar +
+      oldString.substring(index + 1);
 }
 
-Iterable<String> splitStringByFour(String text){
+Iterable<String> splitStringByFour(String text) {
   RegExp rx = new RegExp(r"\w{1,4}");
   return rx.allMatches(text).map((m) => m.group(0));
 }
 
-Iterable<String> splitStringBySixteen(String text){
+Iterable<String> splitStringBySixteen(String text) {
   RegExp rx = new RegExp(r"\w{1,16}");
   return rx.allMatches(text).map((m) => m.group(0));
 }
 
-
-String shiftCharToLeft(String text, int shiftBy){
-  for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
-      {
-    text = text.substring(1) + text.substring(0,1); //places the first character at the last position and shifts everything to the left by 1 place.
+String shiftCharToLeft(String text, int shiftBy) {
+  for (int i = 0;
+      i < shiftBy;
+      i++) //Repeats the procedure until the shift value is reached.
+  {
+    text = text.substring(1) +
+        text.substring(0,
+            1); //places the first character at the last position and shifts everything to the left by 1 place.
   }
   return text;
 }
 
-
-String reverseSubstituteCharacters(String text, String key){
+String reverseSubstituteCharacters(String text, String key) {
   int index = 0;
-  for(int i = 0; i<16; i++){
+  for (int i = 0; i < 16; i++) {
     index = _chars.indexOf(text[i]) - _chars.indexOf(key[i]);
-    if(index<0){
+    if (index < 0) {
       index = index + _chars.length;
     }
     text = replaceCharAt(text, i, _chars[index]);
@@ -157,7 +167,7 @@ String reverseSubstituteCharacters(String text, String key){
   return text;
 }
 
-String reverseTransposeCharacters(String text){
+String reverseTransposeCharacters(String text) {
   List textArray = splitStringByFour(text).toList();
 
   textArray[1] = shiftCharToLeft(textArray[1], 3);
@@ -168,7 +178,7 @@ String reverseTransposeCharacters(String text){
   return text;
 }
 
-String reverseTransposeBlocks(String text){
+String reverseTransposeBlocks(String text) {
   List<String> stringArray = splitStringByFour(text).toList();
   String temp = "";
   temp = stringArray[3];
@@ -179,11 +189,11 @@ String reverseTransposeBlocks(String text){
   return stringArray.join();
 }
 
-List<String> buildSubTable(){
+List<String> buildSubTable() {
   String subTableLine = _chars;
   List<String> subTable = [];
 
-  for(int i = 0; i < subTableLine.length; i++){
+  for (int i = 0; i < subTableLine.length; i++) {
     subTable.add(subTableLine);
     subTableLine = shiftCharToLeft(subTableLine, 1);
   }
@@ -191,18 +201,17 @@ List<String> buildSubTable(){
   return subTable;
 }
 
-String reverseSubstituteCharacters2(String text, String key, List<String> subTable){
+String reverseSubstituteCharacters2(
+    String text, String key, List<String> subTable) {
   int index = 0;
   int index2 = 0;
   String newChar = "";
-  for(int i = 0; i<16; i++){
-
+  for (int i = 0; i < 16; i++) {
     index = _chars.indexOf(key[i]); //search for index of key char
 
     index2 = subTable[index].indexOf(text[i]);
     newChar = _chars[index2];
     text = replaceCharAt(text, i, newChar);
-
   }
   return text;
 }

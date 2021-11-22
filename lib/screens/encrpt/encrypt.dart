@@ -75,22 +75,22 @@ class EncryptionScreen extends StatelessWidget {
     String key = getRandomString(16);
     List<String> subTable = buildSubTable();
 
-    text = text.replaceAll(new RegExp(r'[^\w\s]+'),''); //remove special symbols
+    text =
+        text.replaceAll(new RegExp(r'[^\w\s]+'), ''); //remove special symbols
     text = text.replaceAll(" ", ""); //remove spaces
     List<String> textArray = splitStringBySixteen(text).toList();
     print(textArray);
 
-
-
-    for(int i = 0; i<textArray.length; i++){
-      if (textArray[i].length<16) { // if string block has less than 16 characters, pad the string with 'z'.
+    for (int i = 0; i < textArray.length; i++) {
+      if (textArray[i].length < 16) {
+        // if string block has less than 16 characters, pad the string with 'z'.
         for (int j = textArray[i].length; j < 16; j++) {
           textArray[i] = textArray[i] + "z";
         }
       }
 
       text = textArray[i];
-      for(int k = 0; k<4; k++){
+      for (int k = 0; k < 4; k++) {
         print("Before substitution: $text");
         text = substituteCharacters(text, key);
         print("After substitution: $text");
@@ -100,13 +100,13 @@ class EncryptionScreen extends StatelessWidget {
         print("After block transposition: $text");
         text = substituteCharacters2(text, key, subTable);
         print("After second substitution: $text");
-        }
-      textArray[i] = text;
       }
+      textArray[i] = text;
+    }
 
     text = textArray.join();
     Navigator.pushNamed(context, ResultRoute,
-        arguments: {"key": key, "resultingText": text, "isCipher": false});
+        arguments: {"key": key, "resultingText": text, "crypted": true});
   }
 }
 
@@ -117,43 +117,50 @@ String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
 String replaceCharAt(String oldString, int index, String newChar) {
-  return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
+  return oldString.substring(0, index) +
+      newChar +
+      oldString.substring(index + 1);
 }
 
-Iterable<String> splitStringByFour(String text){
+Iterable<String> splitStringByFour(String text) {
   RegExp rx = new RegExp(r"\w{1,4}");
   return rx.allMatches(text).map((m) => m.group(0));
 }
 
-Iterable<String> splitStringBySixteen(String text){
+Iterable<String> splitStringBySixteen(String text) {
   RegExp rx = new RegExp(r"\w{1,16}");
   return rx.allMatches(text).map((m) => m.group(0));
 }
 
-String shiftCharToRight(String text, int shiftBy){
-  for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
-      {
-    text = text.substring(3) + text.substring(0, 3); //places the last character at the first position and shifts everything to the right by 1 place.
+String shiftCharToRight(String text, int shiftBy) {
+  for (int i = 0;
+      i < shiftBy;
+      i++) //Repeats the procedure until the shift value is reached.
+  {
+    text = text.substring(3) +
+        text.substring(0,
+            3); //places the last character at the first position and shifts everything to the right by 1 place.
   }
   return text;
 }
 
-String shiftCharToLeft(String text, int shiftBy){
-  for (int i = 0; i < shiftBy; i++) //Repeats the procedure until the shift value is reached.
-      {
-    text = text.substring(1) + text.substring(0,1); //places the first character at the last position and shifts everything to the left by 1 place.
+String shiftCharToLeft(String text, int shiftBy) {
+  for (int i = 0;
+      i < shiftBy;
+      i++) //Repeats the procedure until the shift value is reached.
+  {
+    text = text.substring(1) +
+        text.substring(0,
+            1); //places the first character at the last position and shifts everything to the left by 1 place.
   }
   return text;
 }
 
-
-
-String substituteCharacters(String text, String key)
-{
+String substituteCharacters(String text, String key) {
   int index = 0;
-  for(int i = 0; i<16; i++){
+  for (int i = 0; i < 16; i++) {
     index = _chars.indexOf(text[i]) + _chars.indexOf(key[i]);
-    if(index>_chars.length-1){
+    if (index > _chars.length - 1) {
       index = index - _chars.length;
     }
     text = replaceCharAt(text, i, _chars[index]);
@@ -161,7 +168,7 @@ String substituteCharacters(String text, String key)
   return text;
 }
 
-String transposeCharacters(String text){
+String transposeCharacters(String text) {
   List<String> stringArray = splitStringByFour(text).toList();
 
   stringArray[1] = shiftCharToRight(stringArray[1], 3);
@@ -171,7 +178,7 @@ String transposeCharacters(String text){
   return stringArray.join();
 }
 
-String transposeBlocks(String text){
+String transposeBlocks(String text) {
   List<String> stringArray = splitStringByFour(text).toList();
   String temp = "";
   temp = stringArray[0];
@@ -182,11 +189,11 @@ String transposeBlocks(String text){
   return stringArray.join();
 }
 
-List<String> buildSubTable(){
+List<String> buildSubTable() {
   String subTableLine = _chars;
   List<String> subTable = [];
 
-  for(int i = 0; i < subTableLine.length; i++){
+  for (int i = 0; i < subTableLine.length; i++) {
     subTable.add(subTableLine);
     subTableLine = shiftCharToLeft(subTableLine, 1);
   }
@@ -194,19 +201,16 @@ List<String> buildSubTable(){
   return subTable;
 }
 
-String substituteCharacters2(String text, String key, List<String> subTable){
+String substituteCharacters2(String text, String key, List<String> subTable) {
   int index1 = 0;
   int index2 = 0;
   String newChar = "";
-  for(int i = 0; i<16; i++){
+  for (int i = 0; i < 16; i++) {
     index1 = _chars.indexOf(text[i]);
     index2 = _chars.indexOf(key[i]);
     newChar = subTable[index1][index2];
 
     text = replaceCharAt(text, i, newChar);
-
   }
   return text;
 }
-
-

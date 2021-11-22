@@ -35,11 +35,14 @@ class App extends StatelessWidget {
           screen = EncryptionScreen();
           break;
         case DecryptRoute:
-          screen = DecryptionScreen();
+          screen = DecryptionScreen(
+            key_: arguments['key_'],
+            cipherText: arguments['cipherText'],
+          );
           break;
         case ResultRoute:
           screen = Result(arguments['key'], arguments['resultingText'],
-              arguments['isCipher']);
+              arguments['crypted']);
           break;
         default:
           return null;
