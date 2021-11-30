@@ -102,10 +102,11 @@ class DecryptionScreen extends StatelessWidget {
   _onDecryptTap(BuildContext context, String key, String text) {
     List<String> subTable = buildSubTable();
     List<String> textArray = splitStringBySixteen(text).toList();
-    print(textArray);
-
+    print("Ciphertext input: $text");
+    print("Key: $key");
     for (int i = 0; i < textArray.length; i++) {
       text = textArray[i];
+
       for (int j = 0; j < 4; j++) {
         print("Before reverse second substitution:  $text");
         text = reverseSubstituteCharacters2(text, key, subTable);
@@ -120,6 +121,7 @@ class DecryptionScreen extends StatelessWidget {
       textArray[i] = text;
     }
     text = textArray.join();
+    print("Plaintext output: $text");
     Navigator.pushNamed(context, ResultRoute,
         arguments: {"key": key, "resultingText": text, "crypted": false});
   }

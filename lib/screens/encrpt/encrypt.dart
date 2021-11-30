@@ -74,13 +74,11 @@ class EncryptionScreen extends StatelessWidget {
   _onEncryptTap(BuildContext context, String text) {
     String key = getRandomString(16);
     List<String> subTable = buildSubTable();
-
-    text =
-        text.replaceAll(new RegExp(r'[^\w\s]+'), ''); //remove special symbols
+    print("Plaintext input: $text");
+    print("Key: $key");
+    text = text.replaceAll(new RegExp(r'[^\w\s]+'), ''); //remove special symbols
     text = text.replaceAll(" ", ""); //remove spaces
     List<String> textArray = splitStringBySixteen(text).toList();
-    print(textArray);
-
     for (int i = 0; i < textArray.length; i++) {
       if (textArray[i].length < 16) {
         // if string block has less than 16 characters, pad the string with 'z'.
@@ -88,7 +86,6 @@ class EncryptionScreen extends StatelessWidget {
           textArray[i] = textArray[i] + "z";
         }
       }
-
       text = textArray[i];
       for (int k = 0; k < 4; k++) {
         print("Before substitution: $text");
@@ -103,8 +100,8 @@ class EncryptionScreen extends StatelessWidget {
       }
       textArray[i] = text;
     }
-
     text = textArray.join();
+    print("Ciphertext output: $text");
     Navigator.pushNamed(context, ResultRoute,
         arguments: {"key": key, "resultingText": text, "crypted": true});
   }
