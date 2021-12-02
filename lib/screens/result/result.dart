@@ -19,7 +19,7 @@ class Result extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           'Result',
-          style: Theme.of(context).appBarTheme.textTheme.headline1,
+          style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
       ),
       body: Container(
@@ -68,7 +68,7 @@ class Result extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () => Navigator.pushNamed(context, HomeRoute),
                   child: Text(
                     'Main Menu',
