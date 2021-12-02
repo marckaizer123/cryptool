@@ -2,7 +2,6 @@ import 'encrypt_.dart';
 import 'decrypt_.dart';
 
 class Crypto {
-  //Encryption
   static Map<String, String> encrypt(String plainText) {
     return encrypt_(plainText);
   }

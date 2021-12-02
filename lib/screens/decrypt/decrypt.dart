@@ -1,4 +1,5 @@
 import 'package:cryptool/app.dart';
+import 'package:cryptool/crypto/crypto.dart';
 import 'package:flutter/material.dart';
 
 import '../../style.dart';
@@ -23,7 +24,7 @@ class DecryptionScreen extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           'Decrypt',
-          style: Theme.of(context).appBarTheme.textTheme.headline1,
+          style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
       ),
       body: SingleChildScrollView(
@@ -78,7 +79,7 @@ class DecryptionScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () => _onDecryptTap(
                     context,
                     _keyController.text,
