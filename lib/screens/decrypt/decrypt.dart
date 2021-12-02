@@ -2,13 +2,20 @@ import 'package:cryptool/app.dart';
 import 'package:flutter/material.dart';
 
 import '../../style.dart';
+import 'package:cryptool/crypto/crypto.dart';
 
 class DecryptionScreen extends StatelessWidget {
+  final String key_, cipherText;
   final _keyController = TextEditingController();
   final _cipherTextController = TextEditingController();
 
+  DecryptionScreen({this.key_, this.cipherText});
+
   @override
   Widget build(BuildContext context) {
+    _keyController.text = key_ ?? '';
+    _cipherTextController.text = cipherText ?? '';
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -72,7 +79,7 @@ class DecryptionScreen extends StatelessWidget {
                 padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(color: Colors.black45),
                 child: FlatButton(
-                  onPressed: () => _onDecrypTap(
+                  onPressed: () => _onDecryptTap(
                     context,
                     _keyController.text,
                     _cipherTextController.text,
@@ -93,8 +100,15 @@ class DecryptionScreen extends StatelessWidget {
     );
   }
 
-  _onDecrypTap(BuildContext context, String key, String text) {
-    Navigator.pushNamed(context, ResultRoute,
-        arguments: {"key": key, "resultingText": text, "isCipher": true});
+  _onDecryptTap(BuildContext context, String key, String text) {
+    //nasa crypto/decrypt_.dart ang codes
+
+    Map<String, String> cipherkey = Crypto.decrypt(cipherText, key);
+
+    Navigator.pushNamed(context, ResultRoute, arguments: {
+      "key": cipherkey['key'],
+      "text": cipherkey['text'],
+      "crypted": false,
+    });
   }
 }
