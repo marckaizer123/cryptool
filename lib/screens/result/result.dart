@@ -92,8 +92,8 @@ class Result extends StatelessWidget {
                         onPressed: () => Navigator.pushNamed(
                             context, DecryptRoute,
                             arguments: {
-                              'key_': _key,
-                              'cipherText': _resultingText,
+                              'key': _key,
+                              'text': _resultingText,
                             }),
                         child: Text(
                           'Test',
