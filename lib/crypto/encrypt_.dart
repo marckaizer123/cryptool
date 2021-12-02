@@ -6,8 +6,6 @@ Random _rnd = Random.secure();
 Map<String, String> encrypt_(String text) {
   String key = getRandomString(16);
   List<String> subTable = buildSubTable();
-  print("Plaintext input: $text");
-  print("Key: $key");
   text = text.replaceAll(new RegExp(r'[^\w\s]+'), ''); //remove special symbols
   text = text.replaceAll(" ", ""); //remove spaces
   List<String> textArray = splitStringBySixteen(text).toList();
@@ -20,20 +18,14 @@ Map<String, String> encrypt_(String text) {
     }
     text = textArray[i];
     for (int k = 0; k < 4; k++) {
-      print("Before substitution: $text");
       text = substituteCharacters(text, key);
-      print("After substitution: $text");
       text = transposeCharacters(text);
-      print("After character transposition: $text");
       text = transposeBlocks(text);
-      print("After block transposition: $text");
       text = substituteCharacters2(text, key, subTable);
-      print("After second substitution: $text");
     }
     textArray[i] = text;
   }
   text = textArray.join();
-  print("Ciphertext output: $text");
 
   return {
     'text': text,

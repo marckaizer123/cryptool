@@ -3,26 +3,18 @@ const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Map<String, String> decrypt_(String text, String key) {
   List<String> subTable = buildSubTable();
   List<String> textArray = splitStringBySixteen(text).toList();
-  print("Ciphertext input: $text");
-  print("Key: $key");
   for (int i = 0; i < textArray.length; i++) {
     text = textArray[i];
 
     for (int j = 0; j < 4; j++) {
-      print("Before reverse second substitution:  $text");
       text = reverseSubstituteCharacters2(text, key, subTable);
-      print("After reverse second substitution:  $text");
       text = reverseTransposeBlocks(text);
-      print("After reverse block transposition:  $text");
       text = reverseTransposeCharacters(text);
-      print("After reverse character transposition  $text");
       text = reverseSubstituteCharacters(text, key);
-      print("After reverse substitution:  $text");
     }
     textArray[i] = text;
   }
   text = textArray.join();
-  print("Plaintext output: $text");
 
   return {
     'text': text,
