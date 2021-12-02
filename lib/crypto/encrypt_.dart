@@ -34,7 +34,6 @@ Map<String, String> encrypt_(String text) {
   }
   text = textArray.join();
   print("Ciphertext output: $text");
-
   return {
     'text': text,
     'key': key,

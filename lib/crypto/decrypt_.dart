@@ -23,7 +23,6 @@ Map<String, String> decrypt_(String text, String key) {
   }
   text = textArray.join();
   print("Plaintext output: $text");
-
   return {
     'text': text,
     'key': key,

@@ -47,7 +47,6 @@ class App extends StatelessWidget {
               cipherText: arguments['text'],
             );
           }
-          print('here');
           break;
 
         case ResultRoute:
