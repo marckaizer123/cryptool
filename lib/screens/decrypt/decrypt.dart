@@ -104,7 +104,7 @@ class DecryptionScreen extends StatelessWidget {
   _onDecryptTap(BuildContext context, String key, String text) {
     //nasa crypto/decrypt_.dart ang codes
 
-    Map<String, String> cipherkey = Crypto.decrypt(cipherText, key);
+    Map<String, String> cipherkey = Crypto.decrypt(text, key);
 
     Navigator.pushNamed(context, ResultRoute, arguments: {
       "key": cipherkey['key'],
