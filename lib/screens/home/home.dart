@@ -17,7 +17,8 @@ class Home extends StatelessWidget {
           style: Theme.of(context).appBarTheme.toolbarTextStyle,
         ),
       ),
-      drawer: NavBar(),
+      // Comment drawer: NavBar() to show setting, about and exit
+      //drawer: NavBar(),
       body: Container(
         decoration: BoxDecoration(color: Colors.black12),
         child: Column(
